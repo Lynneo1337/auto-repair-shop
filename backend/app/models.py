@@ -83,3 +83,33 @@ class OrderItem(Base):
 
     order = relationship("Order", back_populates="items")
     service = relationship("Service")
+
+class DiscountRule(Base):
+
+    __tablename__ = "discount_rules"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    min_visits = Column(Integer, nullable=False)
+    max_visits = Column(Integer, nullable=True)
+    discount_percent = Column(Numeric(5, 2), nullable=False)
+
+
+class Admin(Base):
+
+    __tablename__ = "admins"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    full_name = Column(String, nullable=False)
+    login = Column(String, unique=True, nullable=False)
+    password_hash = Column(String, nullable=False)
+
+
+class CallbackRequest(Base):
+
+    __tablename__ = "callback_requests"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    client_name = Column(String, nullable=False)
+    phone = Column(String, nullable=False)
+    status = Column(String, default="Ожидает обработки")  # Ожидает обработки / Обработана
+    created_at = Column(DateTime, default=datetime.utcnow)
